@@ -1,0 +1,31 @@
+Linear Spring System Structural Analysis
+
+Project Overview
+This project focuses on the modeling, execution, and verification of a discrete linear spring-mass system. The primary goal is to evaluate the displacements and internal forces of interconnected spring elements under structural gravitational loading conditions.
+
+Engineering Setup and System Configuration
+
+Software Environment: Abaqus Student Edition
+
+Element Formulations Used: Linear Spring elements (SpringA) and point Mass elements (MASS).
+
+Material Properties: Defined directly via elemental spring stiffness constants (k1 = 1000 N/mm, k2 = 2000 N/mm, k3 = 3000 N/mm) and nodal mass definitions (10 kg).
+
+Boundary Conditions: Rigid displacement and rotation constraints applied to specific node sets to simulate fixed foundation conditions.
+
+Loading Profile: Gravitational load step applied uniformly to the system mass distributions.
+
+Analysis Strategy and Implementation
+Unlike continuous solid geometries, this model uses a discrete structural approach where individual nodal coordinates are explicitly mapped to manage load transfer. The solution tracking is verified directly from the pure text input file (.inp), which dictates:
+
+Assembly mapping across consecutive node arrays.
+
+Boundary constraints isolating movement to a single axis of translation.
+
+Static equilibrium solver parameters tracking displacement outputs (U) and element forces.
+
+Key Engineering Takeaways
+
+Discrete Element Proficiency: Demonstrates core competency in building stylized spring, dashpot, and localized mass networks in Abaqus without relying on complex CAD geometries.
+
+Input File Verification: Showcases the ability to interpret and construct clean Abaqus Input Files (.inp), proving a fundamental understanding of how finite element solvers parse node sets, element loops, and load step properties behind the graphical user interface.
