@@ -1,1 +1,42 @@
+# Connecting Lug Validation & Mesh Convergence Study
 
+## 📌 Project Overview
+This project validates a numerical Finite Element Analysis (FEA) model of a standard connecting lug against a classic analytical hand-calculation baseline. 
+
+The primary challenge of this study was navigating the strict **1,000-node license limitation** of the Abaqus Student Edition while accurately capturing a high-gradient tensile stress distribution.
+
+---
+
+## 📐 Engineering Setup & Target
+* **Analytical Target:** **144 MPa** maximum normal stress s11) along the net cross-section (calculated using standard nominal stress equations and geometric stress concentration factors).
+* **Software Environment:** Abaqus Student Edition (Strict < 1,000 node cap).
+* **Objective:** Find the mesh configuration that minimizes the error margin against the analytical target without triggering a license breakout error.
+
+---
+
+## 🛠️ The Strategy: Engineering Around the Node Ceiling
+
+Standard textbook mesh convergence requires keeping element shapes completely identical across all iterations. However, under a hard 1,000-node restriction, standard Hexahedral (Hex) elements consumed too many nodes globally before the mesh could be refined enough around the hole boundary to capture the steep stress gradient.
+
+To solve this bottleneck, a conscious engineering trade-off was made:
+1. **Initial Runs (Hex Elements):** Global seed sizes were reduced down to 6.0 mm, but node counts quickly approached the ceiling while the error margin remained stuck above 10%.
+2. **The Pivot (Wedge Elements + Sweep Technique):** Switched the element shape formulation to linear Wedge elements. This allowed Abaqus to cluster a highly efficient, dense mesh configuration directly on the high-gradient inner circular boundary without bloating the global node count.
+
+---
+
+## 📊 Results & Verification
+
+All raw iteration data, node tracking, and exact stress values are documented in the repository's data file. 
+
+### Final Optimized Configuration:
+* **Element Type:** Wedge (Linear)
+* **Meshing Technique:** Sweep
+* **Total Node Count:** 852 nodes (Safely under the 1,000-node budget)
+* **Maximum Captured Stress:** **139.77 MPa**
+* **Final Error Margin:** **2.94%** (Drops down to **0.16%** on minimum compressive boundaries)
+
+---
+
+## 🔍 Key Engineering Takeaways
+* **Resource Optimization:** Real-world engineering analysis is frequently bound by computational power, software licenses, or hardware limitations. 
+* **Element Mechanics:** Success in CAE isn't just about throwing an infinite number of nodes at a part; it's about deeply understanding element shapes and meshing techniques to capture the correct physics within your constraints.
