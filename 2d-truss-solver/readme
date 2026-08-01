@@ -1,0 +1,25 @@
+# 2D Truss Matrix Solver & FEA Validation
+
+An open-source Direct Stiffness Method solver implemented in Excel with matrix partitioning architecture, verified against industrial Finite Element Analysis (.inp) formulations.
+
+## 📌 Project Overview
+This project models a statically indeterminate 2D truss structure using the Direct Stiffness Method. It converts uniaxial member stiffness into global 2D Cartesian coordinates, partitions system matrices based on boundary conditions, and solves for joint displacements, support reactions, and internal stresses.
+
+### Key Features
+* **Automated Matrix Assembly:** Hardcoded dynamic assembly for 12 global Degrees of Freedom (DoFs).
+* **Array Partitioning Architecture:** Separates fixed support joints ($K_{cc}$) from active unconstrained nodes ($K_{aa}$).
+* **Equilibrium Verification:** Automated static equilibrium verification ensuring $\sum F_x = 0$ and $\sum F_y = 0$.
+* **FEA Cross-Validation:** Includes an `.inp` model file to compare spreadsheet numerical results against standard FEA software solvers.
+
+---
+
+## 🛠️ File Structure
+* `src/2D_Truss_Solver.xlsx`: Full spreadsheet solver with active matrix inversion formulas.
+* `src/Truss_Model.inp`: Input file for comparative finite element simulation.
+* `docs/report.pdf`: Complete theoretical background and methodology breakdown.
+
+---
+
+## 🧮 Mathematical Engine & Workflow
+1. **Discretization:** Nodes and elements mapped relative to global Cartesian axes.
+2. **Local-to-Global Mapping:** Element stiffness calculated via directional cosines/sines ($c = \cos\theta, s = \sin\theta$):
